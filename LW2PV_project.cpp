@@ -23,7 +23,7 @@ int main()
     std::cout << "Enter the number of elements (words or sentences): ";
     setConsoleColor(8);
     std::cin >> charElementsAmount;
-    std::cin.ignore();
+    std::cin.ignore(32767, '\n');
 
     if (charElementsAmount < 1) {
         warnCutie(INT_EXPECTED_ERROR);
