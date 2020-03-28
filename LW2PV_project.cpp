@@ -40,16 +40,9 @@ void setM()
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_BLUE);
 }
 
-string convertToString(char* a, int size)
-{
-    int i;
-    string s = "";
-    for (i = 0; i < size; i++) {
-        s = s + a[i];
-    }
-    return s;
-}
 
+
+string convertToString(char*, int);
 char* setMeHigher(char*);
 string setMeHigher(string&);
 
@@ -168,6 +161,16 @@ int main()
         delete[] myntcs[i];
     delete[] myntcs;
     return 0;
+}
+
+string convertToString(char* a, int size)
+{
+    int i;
+    string s = "";
+    for (i = 0; i < size; i++) {
+        s = s + a[i];
+    }
+    return s;
 }
 
 char* setMeHigher(char* s)
