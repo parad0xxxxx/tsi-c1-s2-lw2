@@ -1,64 +1,32 @@
+#include <windows.h>
+
 #include <iostream>
 #include <string>
 #include <time.h>
-#include <windows.h>
 
-using namespace std;
+const std::string INT_EXPECTED_ERROR = "The number must be posivive integer.";
+const std::string PROGRAM_EXIT_INFO = "\nBye, Cutie. It\'s a pleasure, as always =)\n";
 
-void setW()
-{
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
-}
-
-void setG()
-{
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
-}
-
-void setR()
-{
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
-}
-
-void setB()
-{
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
-}
-
-void setGr()
-{
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
-}
-
-void setDC()
-{
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_BLUE);
-}
-
-void setM()
-{
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_BLUE);
-}
-
-
-
-string convertToString(char*, int);
-char* setMeHigher(char*);
-string setMeHigher(string&);
+void setConsoleColor(int);
+void warnCutie(std::string);
+void logInfo(std::string m);
+std::string convertToString(char*, int);
+char* setToUpper(char*, int);
+std::string setToUpper(std::string&, int);
+void coronavirusCheck();
 
 int main()
 {
-    int charElementsAmount, charElementWidthMax = 255;
-    setM();
-    cout << "Enter the number of elements: ";
-    setG();
-    charElementsAmount = 2;
-    //    cin >> charElementsAmount;
-    //    cin.ignore();
+    int charElementsAmount;
+    const int charElementWidthMax = 255;
+    setConsoleColor(9);
+    std::cout << "Enter the number of elements (words or sentences): ";
+    setConsoleColor(15);
+    std::cin >> charElementsAmount;
+    std::cin.ignore();
+
     if (charElementsAmount < 1) {
-        setR();
-        cout << "The number must be posivive integer.";
-        setG();
+        warnCutie(INT_EXPECTED_ERROR);
         return 0;
     }
 
@@ -70,112 +38,124 @@ int main()
 
     for (int i = 0; i < charElementsAmount; i++)  // ntcs 2d array fillin
     {
-        setM();
-        cout << "Enter a word or sentence nr." << i + 1 << ": ";
-        setG();
-        cin.getline(myntcs[i], charElementWidthMax);
+        setConsoleColor(3);
+        std::cout << "Element " << i + 1 << ": ";
+        setConsoleColor(15);
+        std::cin.getline(myntcs[i], charElementWidthMax);
     }
-    setB();
-    cout << "\nYour ntcs elements in array:\n";
-    setG();
+
+    setConsoleColor(9);
+    std::cout << "\nYour ";
+    setConsoleColor(6);
+    std::cout << "ntcs ";
+    setConsoleColor(9);
+    std::cout << "elements in array:\n";
+    setConsoleColor(7);
 
     for (int i = 0; i < charElementsAmount; i++)   // ntcs 2d array cout
     {
-        cout << i + 1 << myntcs[i] << strlen(myntcs[i]) << endl;
+        std::cout << i + 1 << ". " << myntcs[i] << std::endl;
     }
 
-    string* mystring = new string[charElementsAmount];   // string array gen
+    setConsoleColor(9);
+    std::cout << "\nYour ";
+    setConsoleColor(5);
+    std::cout << "string ";
+    setConsoleColor(9);
+    std::cout << "elements in array:\n";
+    setConsoleColor(7);
 
-    int charElementWidthCurr = 0;
+    std::string* mystring = new std::string[charElementsAmount];   // string array gen
 
     for (int i = 0; i < charElementsAmount; i++)  // string array fillin by copying from ntcs and flatten
     {
-        cout << "conv: " << endl;
-        charElementWidthCurr = strlen(myntcs[i]);
-        cout << "charElementWidthCurr: " << charElementWidthCurr << endl;
-        string s_a = convertToString(myntcs[i], charElementWidthCurr);
-        cout << s_a << endl;
-        mystring[i] = s_a;
-        /*
-        string thong;
-        for (int j = 0; j < strlen(myntcs[i][j]); j++)
-        {
-            thong += myntcs[i];
-        }
-        mystring[i] = thong; */
-
+        std::string tempString = convertToString(myntcs[i], strlen(myntcs[i]));
+        mystring[i] = tempString;
     }
 
-    setB();
-    cout << "\nYour string elements in array:\n";
-    setG();
-    for (int i = 0; i < charElementsAmount; i++)   // ntcs 2d array cout
+    for (int i = 0; i < charElementsAmount; i++)   // string array cout
     {
-        cout << mystring[i] << endl;
+        std::cout << i + 1 << ". " << mystring[i] << std::endl;
     }
 
-    //    cout << "prost: " << *mystring << endl;
+    coronavirusCheck();
 
+    setConsoleColor(9);
+    std::cout << "\nProcessing ";
+    setConsoleColor(6);
+    std::cout << "ntcs ";
+    setConsoleColor(9);
+    std::cout << "data...\n";
+    setConsoleColor(7);
 
-
-    setB();
-    cout << "\nChecking against the COVID-19 patterns...\n"; // because eastern eggs is fun =)
-    setG();
-    srand(time(NULL));
-    int corona = rand() % 10;
-    if (corona % 2 == 0) {
-        setGr();
-        cout << "COVID-19 patterns are not found. Environment is safe. Feel free to continue, Cutie =)\n";
-        setG();
-    }
-    else {
-        setR();
-        cout << "COVID-19 patterns are found! High risk of infection! Leave the room or continue at your own risk, Cutie!\n";
-        setG();
-    }
-
-    setB();
-    cout << "\nProcessing ntcs data...\n"; // load-load-overload
-    setG();
-    for (int i = 0; i < charElementsAmount; i++)
+    for (int i = 0; i < charElementsAmount; i++) // load-load-overload
     {
-        setMeHigher(myntcs[i]);
-        cout << myntcs[i] << endl;
+        setToUpper(myntcs[i], strlen(myntcs[i]));
+        std::cout << i + 1 << ". " << myntcs[i] << std::endl;
     }
 
-    setDC();
-    cout << "\nProcessing string data...\n"; // and again for strings
-    setG();
-    for (int i = 0; i < charElementsAmount; i++)
+    setConsoleColor(9);
+    std::cout << "\nProcessing ";
+    setConsoleColor(5);
+    std::cout << "string ";
+    setConsoleColor(9);
+    std::cout << "data...\n";
+    setConsoleColor(7);
+
+    for (int i = 0; i < charElementsAmount; i++) // and again for strings
     {
-        setMeHigher(mystring[i]);
-        cout << mystring[i] << endl;
+        setToUpper(mystring[i], mystring[i].length());
+        std::cout << i + 1 << ". " << mystring[i] << std::endl;
     }
-    setM();
-    cout << "\nOperation complete.\n";
-    setG();
+
+    setConsoleColor(9);
+    std::cout << "\nOperation complete.\n";
+    setConsoleColor(7);
 
     delete[] mystring;  // cleaning up
 
     for (int i = 0; i < charElementsAmount; i++)
         delete[] myntcs[i];
     delete[] myntcs;
+
+//    system("pause");
+
+    logInfo(PROGRAM_EXIT_INFO);
+
     return 0;
 }
 
-string convertToString(char* a, int size)
+void setConsoleColor(int c)
 {
-    int i;
-    string s = "";
-    for (i = 0; i < size; i++) {
-        s = s + a[i];
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);
+}
+
+void warnCutie(std::string cutiepie)
+{
+    setConsoleColor(4);
+    std::cout << std::endl << cutiepie << std::endl << std::endl;
+    setConsoleColor(7);
+}
+
+void logInfo(std::string m)
+{
+    setConsoleColor(11);
+    std::cout << m << std::endl;
+    setConsoleColor(7);
+}
+
+std::string convertToString(char* a, int size)
+{
+    std::string s = "";
+    for (int i = 0; i < size; i++) {
+        s += a[i];
     }
     return s;
 }
 
-char* setMeHigher(char* s)
+char* setToUpper(char* s, int size)
 {
-    for (int i = 0; i < strlen(s); i++) {
+    for (int i = 0; i < size; i++) {
         if (islower(s[i])) {
             s[i] = toupper(s[i]);
         }
@@ -183,12 +163,31 @@ char* setMeHigher(char* s)
     return s;
 }
 
-string setMeHigher(string& s)
+std::string setToUpper(std::string& s, int size)
 {
-    for (int i = 0; i < s.length(); i++) {
+    for (int i = 0; i < size; i++) {
         if (islower(s[i])) {
             s[i] = toupper(s[i]);
         }
     }
     return s;
+}
+
+void coronavirusCheck()
+{
+    setConsoleColor(9);
+    std::cout << "\nChecking against the COVID-19 patterns...\n"; // because eastern eggs is fun =)
+    setConsoleColor(7);
+    srand(time(NULL));
+    int corona = rand() % 10;
+    if (corona % 2 == 0) {
+        setConsoleColor(2);
+        std::cout << "COVID-19 patterns are not found. Environment is safe. Feel free to continue, Cutie =)\n";
+        setConsoleColor(7);
+    }
+    else {
+        setConsoleColor(4);
+        std::cout << "COVID-19 patterns are found! High risk of infection! Leave the room or continue at your own risk, Cutie!\n";
+        setConsoleColor(7);
+    }
 }
