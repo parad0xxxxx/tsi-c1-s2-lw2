@@ -21,7 +21,7 @@ int main()
     const int charElementWidthMax = 255;
     setConsoleColor(9);
     std::cout << "Enter the number of elements (words or sentences): ";
-    setConsoleColor(15);
+    setConsoleColor(8);
     std::cin >> charElementsAmount;
     std::cin.ignore();
 
@@ -40,7 +40,7 @@ int main()
     {
         setConsoleColor(3);
         std::cout << "Element " << i + 1 << ": ";
-        setConsoleColor(15);
+        setConsoleColor(8);
         std::cin.getline(myntcs[i], charElementWidthMax);
     }
 
@@ -50,7 +50,7 @@ int main()
     std::cout << "ntcs ";
     setConsoleColor(9);
     std::cout << "elements in array:\n";
-    setConsoleColor(7);
+    setConsoleColor(8);
 
     for (int i = 0; i < charElementsAmount; i++)   // ntcs 2d array cout
     {
@@ -63,7 +63,7 @@ int main()
     std::cout << "string ";
     setConsoleColor(9);
     std::cout << "elements in array:\n";
-    setConsoleColor(7);
+    setConsoleColor(8);
 
     std::string* mystring = new std::string[charElementsAmount];   // string array gen
 
@@ -86,7 +86,7 @@ int main()
     std::cout << "ntcs ";
     setConsoleColor(9);
     std::cout << "data...\n";
-    setConsoleColor(7);
+    setConsoleColor(15);
 
     for (int i = 0; i < charElementsAmount; i++) // load-load-overload
     {
@@ -100,7 +100,7 @@ int main()
     std::cout << "string ";
     setConsoleColor(9);
     std::cout << "data...\n";
-    setConsoleColor(7);
+    setConsoleColor(15);
 
     for (int i = 0; i < charElementsAmount; i++) // and again for strings
     {
@@ -118,7 +118,8 @@ int main()
         delete[] myntcs[i];
     delete[] myntcs;
 
-//    system("pause");
+    system("pause");
+    system("cls");
 
     logInfo(PROGRAM_EXIT_INFO);
 
