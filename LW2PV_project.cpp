@@ -75,7 +75,7 @@ int main()
 
     for (int i = 0; i < charElementsAmount; i++)   // string array cout
     {
-        std::cout << i + 1 << ". " << mystring[i] << std::endl; ///
+        std::cout << i + 1 << ". " << mystring[i] << std::endl;
     }
 
     coronavirusCheck();
