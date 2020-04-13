@@ -10,9 +10,9 @@ const std::string PROGRAM_EXIT_INFO = "\nBye, Cutie. It\'s a pleasure, as always
 void setConsoleColor(int);
 void warnCutie(std::string);
 void logInfo(std::string m);
-std::string convertToString(char*, int);
-char* setToUpper(char*, int);
-std::string setToUpper(std::string&, int);
+std::string convertToString(char*);
+void setToUpper(char*);
+void setToUpper(std::string&);
 void coronavirusCheck();
 
 int main()
@@ -69,13 +69,13 @@ int main()
 
     for (int i = 0; i < charElementsAmount; i++)  // string array fillin by copying from ntcs and flatten
     {
-        std::string tempString = convertToString(myntcs[i], strlen(myntcs[i]));
+        std::string tempString = convertToString(myntcs[i]);
         mystring[i] = tempString;
     }
 
     for (int i = 0; i < charElementsAmount; i++)   // string array cout
     {
-        std::cout << i + 1 << ". " << mystring[i] << std::endl;
+        std::cout << i + 1 << ". " << mystring[i] << std::endl; ///
     }
 
     coronavirusCheck();
@@ -90,7 +90,7 @@ int main()
 
     for (int i = 0; i < charElementsAmount; i++) // load-load-overload
     {
-        setToUpper(myntcs[i], strlen(myntcs[i]));
+        setToUpper(myntcs[i]);
         std::cout << i + 1 << ". " << myntcs[i] << std::endl;
     }
 
@@ -104,7 +104,7 @@ int main()
 
     for (int i = 0; i < charElementsAmount; i++) // and again for strings
     {
-        setToUpper(mystring[i], mystring[i].length());
+        setToUpper(mystring[i]);
         std::cout << i + 1 << ". " << mystring[i] << std::endl;
     }
 
@@ -145,33 +145,31 @@ void logInfo(std::string m)
     setConsoleColor(7);
 }
 
-std::string convertToString(char* a, int size)
+std::string convertToString(char* a)
 {
     std::string s = "";
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < strlen(a); i++) {
         s += a[i];
     }
     return s;
 }
 
-char* setToUpper(char* s, int size)
+void setToUpper(char* s)
 {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < strlen(s); i++) {
         if (islower(s[i])) {
             s[i] = toupper(s[i]);
         }
     }
-    return s;
 }
 
-std::string setToUpper(std::string& s, int size)
+void setToUpper(std::string& s)
 {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < s.length(); i++) {
         if (islower(s[i])) {
             s[i] = toupper(s[i]);
         }
     }
-    return s;
 }
 
 void coronavirusCheck()
